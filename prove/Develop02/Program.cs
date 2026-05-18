@@ -1,20 +1,24 @@
 using System;
-using System.Net.Http.Headers;
 
 class Program
 {
     static void Main(string[] args)
     {
+        Journal myJournal = new Journal();
+
         JournalEntry myJournalEntry = new JournalEntry();
         myJournalEntry.CreateJournalEntry();
-        // myJournalEntry.DisplayJournalEntry();
-        // Console.WriteLine(myJournalEntry.CreateFileSystemString());
+        myJournal.AddJournalEntry(myJournalEntry);
+
         JournalEntry myJournalEntry2 = new JournalEntry();
         myJournalEntry2.CreateJournalEntry();
-
-        Journal myJournal = new Journal();
-        myJournal.AddJournalEntry(myJournalEntry);
         myJournal.AddJournalEntry(myJournalEntry2);
+
+        myJournal.DisplayJournal();
+
+        myJournal.SaveJournal();
+
+        myJournal.LoadJournal();
 
         myJournal.DisplayJournal();
     }
