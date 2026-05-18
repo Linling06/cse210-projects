@@ -56,3 +56,8 @@ class Program
         }
     }
 }
+
+// Exceeding Requirements:
+// I used JSON to save journal data because it keeps the information more
+// organized. I also added extra error handling to help prevent crashes and make
+// the program more stable when there are invalid inputs or file issues.

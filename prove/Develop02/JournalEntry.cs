@@ -17,7 +17,7 @@ class JournalEntry
 
     public void CreateJournalEntry()
     {
-        _date = DateTime.Now.ToShortDateString();
+        _date = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
 
         Random random = new Random();
         int index = random.Next(_prompts.Length);
