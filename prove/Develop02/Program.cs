@@ -6,20 +6,53 @@ class Program
     {
         Journal myJournal = new Journal();
 
-        JournalEntry myJournalEntry = new JournalEntry();
-        myJournalEntry.CreateJournalEntry();
-        myJournal.AddJournalEntry(myJournalEntry);
+        int choice = 0;
 
-        JournalEntry myJournalEntry2 = new JournalEntry();
-        myJournalEntry2.CreateJournalEntry();
-        myJournal.AddJournalEntry(myJournalEntry2);
+        while (choice != 5)
+        {
+            Console.WriteLine("1. Write");
+            Console.WriteLine("2. Display");
+            Console.WriteLine("3. Load");
+            Console.WriteLine("4. Save");
+            Console.WriteLine("5. Quit");
 
-        myJournal.DisplayJournal();
+            Console.Write("Choose: ");
 
-        myJournal.SaveJournal();
+            int.TryParse(Console.ReadLine(), out choice);
 
-        myJournal.LoadJournal();
+            if (choice == 1)
+            {
+                JournalEntry entry = new JournalEntry();
 
-        myJournal.DisplayJournal();
+                entry.CreateJournalEntry();
+
+                myJournal.AddJournalEntry(entry);
+            }
+
+            else if (choice == 2)
+            {
+                myJournal.DisplayJournal();
+            }
+
+            else if (choice == 3)
+            {
+                myJournal.LoadJournal();
+            }
+
+            else if (choice == 4)
+            {
+                myJournal.SaveJournal();
+            }
+
+            else if (choice == 5)
+            {
+                Console.WriteLine("Goodbye");
+            }
+
+            else
+            {
+                Console.WriteLine("Invalid choice");
+            }
+        }
     }
 }
