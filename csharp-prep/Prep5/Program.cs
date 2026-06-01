@@ -2,35 +2,54 @@ using System;
 
 class Program
 {
+    static void Main(string[] args)
+    {
 
-    void DisplayWelcome()
+        DisplayWelcome();
+
+        string name = PromptUserName();
+        int number = PromptUserNumber();
+
+        PromptUserBirthYear(out int year);
+        int square = SquareNumber(number);
+
+        DisplayResult();
+    }
+    static void DisplayWelcome()
     {
         Console.WriteLine("Welcome to the Program!");
     }
 
-    string PromptUserName()
+    static string PromptUserName()
     {
-        Console.WriteLine("Please enter your name:");
+        Console.Write("Please enter your name: ");
         string name = Console.ReadLine();
         return name;
     }
 
-    int PromptUserNumber()
+    static int PromptUserNumber()
     {
-        Console.WriteLine("Please enter your favorite number:");
+        Console.Write("Please enter your favorite number: ");
         int number = int.Parse(Console.ReadLine());
         return number;
     }
 
-    void PromtUserBirthYear(out int year)
+    static void PromptUserBirthYear(out int year)
     {
-        Console.WriteLine("Please enter the year you were born: ");
-        int year = int.Parse(Console.ReadLine());
+        Console.Write("Please enter the year you were born: ");
+        year = int.Parse(Console.ReadLine());
     }
 
-    static void Main(string[] args)
+    static int SquareNumber(int number)
     {
-        int year;
-        Console.WriteLine("Hello Prep5 World!");
+        int numberSquared = number * number;
+        return numberSquared;
     }
+    
+    static void DisplayResult()
+    {
+        Console.WriteLine($"{name}, the square of your number is {square}");
+        Console.WriteLine($"{name}, you will turn {2026 - year} this year.");
+    }
+
 }
