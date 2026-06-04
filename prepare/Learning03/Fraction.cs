@@ -1,5 +1,3 @@
-using System.Globalization;
-
 class Fraction
 {
     private int _top;
