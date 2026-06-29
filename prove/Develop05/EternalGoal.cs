@@ -1,22 +1,45 @@
 public class EternalGoal : BaseGoal
 {
-    public EternalGoal(string shortName, string description, int points)
-        : base(shortName, description, points)
+    private int _numberOfCompletions;
+
+    public EternalGoal()
+        : base("", "", 0, false, "EternalGoal")
     {
+        _numberOfCompletions = 0;
+    }
+
+    public EternalGoal(
+        string name,
+        string description,
+        int points,
+        bool status,
+        int completions)
+        : base(name, description, points, status, "EternalGoal")
+    {
+        _numberOfCompletions = completions;
+    }
+
+    public override void CreateGoal()
+    {
+        SetName();
+        SetDescription();
+        SetPoints();
+        _numberOfCompletions = 0;
     }
 
     public override int RecordEvent()
     {
+        _numberOfCompletions++;
         return GetPoints();
     }
 
-    public override bool IsComplete()
+    public override string GetConsoleString()
     {
-        return false;
+        return $"[ ] {GetName()} ({GetDescription()}) -- Completed {_numberOfCompletions} times";
     }
 
-    public override string GetStringRepresentation()
+    public override string GetFileSystemString()
     {
-        return $"EternalGoal:{GetShortName()}|{GetDescription()}|{GetPoints()}";
+        return $"{base.GetFileSystemString()}|{_numberOfCompletions}";
     }
 }

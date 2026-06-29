@@ -1,56 +1,88 @@
-public class ChecklistGoal : BaseGoal
-{
-    private int _amountCompleted;
-    private int _target;
-    private int _bonus;
+using System;
 
-    public ChecklistGoal(string shortName, string description, int points, int target, int bonus)
-        : base(shortName, description, points)
+public class CheckListGoal : BaseGoal
+{
+    private int _numberOfCompletions;
+    private int _maxGoals;
+    private int _bonusPoints;
+
+    public CheckListGoal()
+        : base("", "", 0, false, "CheckListGoal")
     {
-        _amountCompleted = 0;
-        _target = target;
-        _bonus = bonus;
+        _numberOfCompletions = 0;
+        _maxGoals = 0;
+        _bonusPoints = 0;
     }
 
-    public ChecklistGoal(
-        string shortName,
+    public CheckListGoal(
+        string name,
         string description,
         int points,
-        int target,
-        int bonus,
-        int amountCompleted)
-        : base(shortName, description, points)
+        bool status,
+        int completions,
+        int max,
+        int bonus)
+        : base(name, description, points, status, "CheckListGoal")
     {
-        _amountCompleted = amountCompleted;
-        _target = target;
-        _bonus = bonus;
+        _numberOfCompletions = completions;
+        _maxGoals = max;
+        _bonusPoints = bonus;
+    }
+
+    public override void CreateGoal()
+    {
+        SetName();
+        SetDescription();
+        SetPoints();
+        ObtainMaxGoal();
+        ObtainBonusPoints();
+        _numberOfCompletions = 0;
     }
 
     public override int RecordEvent()
     {
-        _amountCompleted++;
-        int pointsEarned = GetPoints();
-
-        if (_amountCompleted == _target)
+        if (GetStatus())
         {
-            pointsEarned += _bonus;
+            return 0;
         }
 
-        return pointsEarned;
+        _numberOfCompletions++;
+
+        if (_numberOfCompletions >= _maxGoals)
+        {
+            MarkComplete();
+            return GetPoints() + _bonusPoints;
+        }
+
+        return GetPoints();
     }
 
-    public override bool IsComplete()
+    public override string GetConsoleString()
     {
-        return _amountCompleted >= _target;
+        string statusMarker = "[ ]";
+
+        if (GetStatus())
+        {
+            statusMarker = "[X]";
+        }
+
+        return $"{statusMarker} {GetName()} ({GetDescription()}) -- Completed {_numberOfCompletions}/{_maxGoals} times";
     }
 
-    public override string GetDetailsString()
+    public override string GetFileSystemString()
     {
-        return $"{base.GetDetailsString()} -- Currently completed: {_amountCompleted}/{_target}";
+        return $"{base.GetFileSystemString()}|{_numberOfCompletions}|{_maxGoals}|{_bonusPoints}";
     }
 
-    public override string GetStringRepresentation()
+    private void ObtainMaxGoal()
     {
-        return $"ChecklistGoal:{GetShortName()}|{GetDescription()}|{GetPoints()}|{_target}|{_bonus}|{_amountCompleted}";
+        Console.Write("How many times does this goal need to be accomplished for a bonus? ");
+        _maxGoals = int.Parse(Console.ReadLine() ?? "0");
+    }
+
+    private void ObtainBonusPoints()
+    {
+        Console.Write("What is the bonus for accomplishing it that many times? ");
+        _bonusPoints = int.Parse(Console.ReadLine() ?? "0");
     }
 }

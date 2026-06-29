@@ -2,11 +2,8 @@ using System;
 
 public class Menu
 {
-    public int DisplayMenu(int score, string level)
+    public int DisplayMenu()
     {
-        Console.WriteLine();
-        Console.WriteLine($"You have {score} points.");
-        Console.WriteLine($"Current level: {level}");
         Console.WriteLine();
         Console.WriteLine("Menu Options:");
         Console.WriteLine("  1. Create New Goal");
@@ -17,6 +14,18 @@ public class Menu
         Console.WriteLine("  6. Quit");
         Console.Write("Select a choice from the menu: ");
 
-        return int.Parse(Console.ReadLine());
+        return int.Parse(Console.ReadLine() ?? "0");
+    }
+
+    public int DisplayCreateGoalMenu()
+    {
+        Console.WriteLine();
+        Console.WriteLine("The types of Goals are:");
+        Console.WriteLine("  1. Simple Goal");
+        Console.WriteLine("  2. Eternal Goal");
+        Console.WriteLine("  3. Checklist Goal");
+        Console.Write("Which type of goal would you like to create? ");
+
+        return int.Parse(Console.ReadLine() ?? "0");
     }
 }

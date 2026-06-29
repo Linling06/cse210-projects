@@ -1,19 +1,45 @@
+using System;
+
 public abstract class BaseGoal
 {
-    private string _shortName;
+    private string _name;
     private string _description;
-    private int _points;
+    private int _numberOfPoints;
+    private bool _status;
+    private string _goalType;
 
-    public BaseGoal(string shortName, string description, int points)
+    public BaseGoal()
     {
-        _shortName = shortName;
-        _description = description;
-        _points = points;
+        _name = "";
+        _description = "";
+        _numberOfPoints = 0;
+        _status = false;
+        _goalType = "";
     }
 
-    public string GetShortName()
+    public BaseGoal(
+        string name,
+        string description,
+        int points,
+        bool status,
+        string goalType)
     {
-        return _shortName;
+        _name = name;
+        _description = description;
+        _numberOfPoints = points;
+        _status = status;
+        _goalType = goalType;
+    }
+
+    protected string GetName()
+    {
+        return _name;
+    }
+
+    protected void SetName()
+    {
+        Console.Write("What is the name of your goal? ");
+        _name = Console.ReadLine() ?? "";
     }
 
     protected string GetDescription()
@@ -21,24 +47,57 @@ public abstract class BaseGoal
         return _description;
     }
 
-    protected int GetPoints()
+    protected void SetDescription()
     {
-        return _points;
+        Console.Write("What is a short description of it? ");
+        _description = Console.ReadLine() ?? "";
     }
 
-    public virtual string GetDetailsString()
+    protected int GetPoints()
     {
-        string status = "[ ]";
+        return _numberOfPoints;
+    }
 
-        if (IsComplete())
+    protected void SetPoints()
+    {
+        Console.Write("What is the amount of points associated with this goal? ");
+        _numberOfPoints = int.Parse(Console.ReadLine() ?? "0");
+    }
+
+    protected bool GetStatus()
+    {
+        return _status;
+    }
+
+    protected int MarkComplete()
+    {
+        _status = true;
+        return _numberOfPoints;
+    }
+
+    public virtual string GetConsoleString()
+    {
+        string statusMarker = "[ ]";
+
+        if (_status)
         {
-            status = "[X]";
+            statusMarker = "[X]";
         }
 
-        return $"{status} {_shortName} ({_description})";
+        return $"{statusMarker} {_name} ({_description})";
+    }
+
+    public virtual string GetFileSystemString()
+    {
+        return $"{_goalType}|{_name}|{_description}|{_numberOfPoints}|{_status}";
+    }
+
+    public virtual string GetGoalType()
+    {
+        return _goalType;
     }
 
     public abstract int RecordEvent();
-    public abstract bool IsComplete();
-    public abstract string GetStringRepresentation();
+
+    public abstract void CreateGoal();
 }
