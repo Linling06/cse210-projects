@@ -5,6 +5,12 @@
         z += 102;
         Console.WriteLine($"In PassByReference {z}");
     }
+
+    public static void PassByOut(out int a)
+    {
+        a = 1101;
+        // Console.Write("he");
+    }
     public static void PassByValue(int z)
     {
         z += 102;
@@ -32,6 +38,14 @@
 
         PassByReference(ref x);
         Console.WriteLine($"In main {x}");
+
+        int d;
+        PassByOut(out d);
+        Console.WriteLine(d);
+
+        int[] data = [1, 2, 3, 4];
+        PassReferenceTypeByValue(data);
+        Console.WriteLine(data[0]);
 
     }
 }
